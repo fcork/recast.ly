@@ -1,16 +1,14 @@
-var VideoListEntry = ({video}) => {
-  console.log(video);
-  var clickHandler = function(event){
-    this.setState({currentVideo: video});
-  }
+var VideoListEntry = (props) => {
   return (
     <div className="video-list-entry media">
       <div className="media-left media-middle">
-        <img className="media-object" src={video.snippet.thumbnails.default.url} alt="" />
+        <img className="media-object" src={props.video.snippet.thumbnails.default.url} alt="" />
       </div>
       <div className="media-body">
-        <div className="video-list-entry-title" onClick={(event) => clickHandler}>{video.snippet.title}</div>
-        <div className="video-list-entry-detail">{video.snippet.description}</div>
+        <div className="video-list-entry-title" onClick={(e) => {
+          props.clickVideoHandler(props.video);
+        }}>{props.video.snippet.title}</div>
+        <div className="video-list-entry-detail">{props.video.snippet.description}</div>
       </div>
     </div>
   );
