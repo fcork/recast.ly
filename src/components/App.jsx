@@ -2,14 +2,30 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      videos: window.exampleVideoData,
-      currentVid: window.exampleVideoData[0]
+      videos: [],
+      currentVid: {}
     };
     this.clickVideoHandler = this.clickVideoHandler.bind(this);
+    this.searchYouTube = props.searchYouTube.bind(this);
+    this.searchYouTubeHandler = this.searchYouTubeHandler.bind(this);
   }
 
   clickVideoHandler(currVid) {
     this.setState({currentVid: currVid});
+  }
+
+  searchYouTubeHandler(input) {
+    setTimeout(
+      this.searchYouTube({'query': input}, (dataItems) => {
+        this.setState({videos: _.identity(dataItems), currentVid: _.identity(dataItems)[0]});
+      }),
+      500);
+  }
+
+  componentDidMount() {
+    this.searchYouTube((dataItems) => {
+      this.setState({videos: _.identity(dataItems), currentVid: _.identity(dataItems)[0] });
+    });
   }
 
   render() {
@@ -17,7 +33,7 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <div><h5><em>search</em> view goes here</h5></div>
+            <Search searchYouTubeHandler={this.searchYouTubeHandler}/>
           </div>
         </nav>
         <div className="row">
