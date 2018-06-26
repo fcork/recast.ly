@@ -1,6 +1,5 @@
 var VideoList = (props) => {
   var videoListItems = props.videos.map((video) => {
-    console.log(video);
     return (
       <VideoListEntry video={ video }/>
     );
